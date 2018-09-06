@@ -4,6 +4,7 @@ open Fake
 
 let serverPath = "./src/Server" |> FullName
 let clientPath = "./src/Client" |> FullName
+let testsPath = "./src/Tests" |> FullName
 let deployDir = "./deploy" |> FullName
 
 let platformTool tool winTool =

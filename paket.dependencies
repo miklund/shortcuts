@@ -1,3 +1,14 @@
+source https://www.nuget.org/api/v2
+nuget Expecto
+nuget FSharp.Core
+
+group Tests
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget FSharp.Core
+    nuget Expecto
+
 group Server
     storage: none
     source https://api.nuget.org/v3/index.json
@@ -5,6 +16,9 @@ group Server
     nuget FSharp.Core
     nuget Saturn
     nuget Fable.JsonConverter
+    nuget WindowsAzure.Storage
+    nuget Microsoft.Azure.Storage.Common
+    nuget Microsoft.WindowsAzure.ConfigurationManager
 
     clitool Microsoft.DotNet.Watcher.Tools
 

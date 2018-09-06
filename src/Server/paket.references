@@ -3,3 +3,6 @@ group Server
     Saturn
     Fable.JsonConverter
     Microsoft.DotNet.Watcher.Tools
+    WindowsAzure.Storage
+    Microsoft.Azure.Storage.Common
+    Microsoft.WindowsAzure.ConfigurationManager

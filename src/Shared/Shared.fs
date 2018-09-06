@@ -52,7 +52,7 @@ type UrlRecord =
     ; count : int
     }
 
-type NotificationStatus = | Ok | Error | Info
+type NotificationStatus = | Success | Failure | Info
 
 type Notification =
     { message : string

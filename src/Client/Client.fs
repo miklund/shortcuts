@@ -15,6 +15,7 @@ open Fable.Import.React
 open Fulma.FontAwesome
 open System.Net
 open Fable.Import.Browser
+open System.Diagnostics
 
 
 type Model = ViewModel
@@ -25,7 +26,7 @@ type Msg =
 | SaveForm
 | EditUrl of int
 | DeleteUrl of int
-| Init of Result<ViewModel, exn>
+| Init of Result<UrlRecord list, exn>
 
 
 let init () : Model * Cmd<Msg> =
@@ -51,15 +52,15 @@ let init () : Model * Cmd<Msg> =
           })
         ] |> Map.ofList
       }
-    // let's do this later 
 
-    // let cmd =
-    //     Cmd.ofPromise
-    //         (fetchAs<ViewModel> "/api/init")
-    //         []
-    //         (Ok >> Init)
-    //         (Error >> Init)
-    model, Cmd.none
+    // let's do this later 
+    let cmd =
+        Cmd.ofPromise
+            (fetchAs<UrlRecord list> "/api/init")
+            []
+            (Ok >> Init)
+            (Error >> Init)
+    model, cmd
 
 let update (msg : Msg) (model : Model) : Model * Cmd<Msg> =
 
@@ -129,7 +130,11 @@ let update (msg : Msg) (model : Model) : Model * Cmd<Msg> =
               model.table.Add (99, { originalUrl = model.form.originalUrl.value ; shortUrl = model.form.shortUrl.value ; count = 0 })
           }
         // save form but fields are not valid
-        | model, SaveForm -> { model with notification = Some { message = "Please review the validation messages" ; status = Error } }
+        | model, SaveForm -> { model with notification = Some { message = "Please review the validation messages" ; status = Failure } }
+
+        | model, Init (Ok records) -> failwith (sprintf "%A" records)
+        | model, Init (Error exn) -> failwith (sprintf "%A" exn)
+
         | _ -> failwith "Unknown message yo, man!"
 
     model', Cmd.none
@@ -251,8 +256,8 @@ let viewShortcutsTableRow (id : int) (model : UrlRecord) (dispatch : Msg -> unit
 
 let viewNotification = function
     | None -> []
-    | Some notification when notification.status = Ok -> [ Notification.notification [ Notification.Color IsSuccess ] [str notification.message] ]
-    | Some notification when notification.status = Error -> [ Notification.notification [ Notification.Color IsDanger ] [str notification.message] ]
+    | Some notification when notification.status = Success -> [ Notification.notification [ Notification.Color IsSuccess ] [str notification.message] ]
+    | Some notification when notification.status = Failure -> [ Notification.notification [ Notification.Color IsDanger ] [str notification.message] ]
     | Some notification when notification.status = Info -> [ Notification.notification [ Notification.Color IsInfo ] [str notification.message] ]
     | _ -> failwith "Unknown type of notifiaction"
 
