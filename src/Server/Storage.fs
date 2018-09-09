@@ -9,6 +9,11 @@ open Microsoft.WindowsAzure.Storage.Table;
 // make this configurable
 let connectionString = "DefaultEndpointsProtocol=https;AccountName=shortcutsstorage;AccountKey=BpJFsqo1rl5Y25Fn4IYg4SjhqjwtMc2Mm4qL9CJM2ECZJBwnqoEtUKyM1a3c99CLx/6qxLvNGoAiZcWRc2PQMg==;EndpointSuffix=core.windows.net" // CloudConfigurationManager.GetSetting("StorageConnectionString")
 
+let getByUsername username = task {
+    return []
+}
+
+(*
 let init () = 
     task {
         // Parse the connection string and return a reference to the storage account.
@@ -59,3 +64,4 @@ let getByUsername table username = task {
             |> Seq.map (fun record -> { originalUrl = record.OriginalUrl ; shortUrl = record.RowKey ; count = record.Count })
             |> Seq.toList
     }
+*)
