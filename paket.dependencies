@@ -38,5 +38,5 @@ group Build
     source https://api.nuget.org/v3/index.json
     generate_load_scripts: true
 
-    nuget FAKE
+    nuget FAKE 4.64.13
 #endif
