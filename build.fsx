@@ -51,6 +51,10 @@ Target "Build" (fun () ->
     run dotnetCli "fable webpack -- -p" clientPath
 )
 
+Target "Tests" (fun _ ->
+    run dotnetCli "run --project Tests.fsproj" testsPath
+)
+
 Target "Run" (fun () ->
     let server = async {
         run dotnetCli "watch run" serverPath
@@ -73,6 +77,9 @@ Target "Run" (fun () ->
     ==> "InstallDotNetCore"
     ==> "InstallClient"
     ==> "Build"
+   
+"Build"
+    ==> "Tests"
 
 "InstallClient"
     ==> "RestoreServer"
